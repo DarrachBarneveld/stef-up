@@ -8,6 +8,7 @@ interface HomePageProps {}
 
 const HomePage: FunctionComponent<HomePageProps> = () => {
   const { workouts } = useContext(WorkoutContext);
+
   return (
     <div className="flex h-screen items-center justify-center bg-slate-300 text-white">
       <div className=" flex items-center justify-center gap-2 ">

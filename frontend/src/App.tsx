@@ -10,15 +10,6 @@ import WorkoutsPage from "./pages/WorkoutsPage";
 
 function App() {
   const [showNavbar, setShowNavbar] = useState(false);
-
-  async function fetchBackend() {
-    const response = await fetch("http://localhost:8000/");
-    const data = await response.json();
-    console.log(data);
-  }
-
-  fetchBackend();
-
   return (
     <WorkoutContextProvider>
       <BrowserRouter>

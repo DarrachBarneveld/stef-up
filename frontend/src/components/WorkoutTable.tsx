@@ -91,7 +91,7 @@ const WorkoutCard: FunctionComponent<WorkoutCardProps> = ({
       <td className="px-6 py-4">
         <div className="hidden md:block">
           {workout.exercises.map((exercise: ExerciseClass) => (
-            <ExerciseLabel exercise={exercise} />
+            <ExerciseLabel exercise={exercise} key={exercise.id} />
           ))}
         </div>
 

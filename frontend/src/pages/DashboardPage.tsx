@@ -8,11 +8,13 @@ import DashBoardCard from "../components/ui/DashboardCard";
 import WorkoutTable from "../components/WorkoutTable";
 import { WorkoutContext } from "../context/WorkoutContext";
 import { getTotalExercises } from "../helpers/math";
+import LoginForm from "../components/LoginForm";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
   const { workouts } = useContext(WorkoutContext);
+
   return (
     <main className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-200">
       <div className="container mx-auto px-6 py-8">
@@ -45,6 +47,7 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
             </div>
           </div>
         </div>
+        <LoginForm />
         <div className="mt-8 flex flex-col">
           <div className="-my-2 overflow-x-auto py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div className="inline-block min-w-full overflow-hidden border-b border-gray-200 align-middle shadow sm:rounded-lg">
