@@ -1,50 +1,33 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { FunctionComponent, useState } from "react";
 
-const LoginForm = () => {
+interface RegisterFormProps {}
+
+const RegisterForm: FunctionComponent<RegisterFormProps> = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useContext(AuthContext);
-  const navigate = useNavigate();
 
-  async function loginUser(event) {
+  async function registerUser(event) {
     event.preventDefault();
 
     const user = {
       username: userName,
       password: password,
     };
-    const response = await fetch("http://localhost:8000/api/login", {
+    const response = await fetch("http://localhost:8000/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     });
-    const data = await response.json();
-    const userData = await fetchUser(data.access);
-    console.log(userData);
 
-    if (userData) {
-      setUser(userData);
-      // navigate("/dashboard");
-    }
-  }
-
-  async function fetchUser(token: string) {
-    const response = await fetch("http://localhost:8000/api/user", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
     const data = await response.json();
-    return data;
+    console.log(data);
   }
 
   return (
     <form
-      onSubmit={loginUser}
+      onSubmit={registerUser}
       className="flex flex-col gap-2 rounded-md bg-slate-400 p-5 text-black shadow-lg"
     >
       <label>
@@ -55,7 +38,6 @@ const LoginForm = () => {
           onChange={(event) => setUserName(event.target.value)}
         />
       </label>
-      <br />
       <label>
         Password:
         <input
@@ -66,10 +48,10 @@ const LoginForm = () => {
       </label>
       <br />
       <button type="submit" className="bg-green-500">
-        Login
+        Register
       </button>
     </form>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
