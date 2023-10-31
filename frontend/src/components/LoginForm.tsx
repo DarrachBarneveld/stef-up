@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
+  const { setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   async function loginUser(event) {
     event.preventDefault();
+
     const user = {
       username: userName,
       password: password,
@@ -19,23 +23,27 @@ const LoginForm = () => {
       body: JSON.stringify(user),
     });
     const data = await response.json();
-    console.log(data);
-    setToken(data.access);
+    const userData = await fetchUser(data.access);
+
+    if (userData) {
+      setUser(userData);
+      navigate("/dashboard");
+    }
   }
 
-  async function fetchUser() {
+  async function fetchUser(token: string) {
     const response = await fetch("http://localhost:8000/api/user", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     const data = await response.json();
-    console.log(data);
+    return data;
   }
 
   return (
     <>
-      <form onSubmit={loginUser}>
+      <form onSubmit={loginUser} className="text-black">
         <label>
           Username:
           <input
@@ -54,9 +62,10 @@ const LoginForm = () => {
           />
         </label>
         <br />
-        <button type="submit">Login</button>
+        <button type="submit" className="bg-green-500">
+          Login
+        </button>
       </form>
-      <button onClick={fetchUser}>Fetch User</button>
     </>
   );
 };

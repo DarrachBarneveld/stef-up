@@ -12,6 +12,7 @@ import { WorkoutContext } from "../context/WorkoutContext";
 import Exercise from "../components/Exercise";
 import ViewWorkouts from "../components/ViewWorkouts";
 import { useLocation } from "react-router-dom";
+import AuthLayout from "../layout/AuthLayout";
 
 const workoutInputFields = [
   {
@@ -124,78 +125,80 @@ const WorkoutsPage: FunctionComponent<WorkoutsPageProps> = () => {
   };
 
   return (
-    <main className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-200">
-      <div className="container mx-auto px-6 py-8">
-        <h3 className="text-3xl font-medium text-gray-700">Workouts</h3>
-        <div className="mt-4">
-          <div className="-mx-6 flex flex-wrap">
-            <button
-              className="w-full p-0 px-6 sm:w-1/2 xl:w-1/3"
-              onClick={() => setViewWorkouts(false)}
-            >
-              <DashBoardCard
-                color="bg-sky-600"
-                icon={faCirclePlus}
-                text="Add Workout"
-                className="hover:bg-sky-100"
-              />
-            </button>
-            <button
-              className="w-full px-6 sm:w-1/2 xl:w-1/3"
-              onClick={() => setViewWorkouts(true)}
-            >
-              <DashBoardCard
-                color="bg-green-600"
-                icon={faDumbbell}
-                text="View Workouts"
-                className="hover:bg-green-100"
-              />
-            </button>
+    <AuthLayout>
+      <main className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-200">
+        <div className="container mx-auto px-6 py-8">
+          <h3 className="text-3xl font-medium text-gray-700">Workouts</h3>
+          <div className="mt-4">
+            <div className="-mx-6 flex flex-wrap">
+              <button
+                className="w-full p-0 px-6 sm:w-1/2 xl:w-1/3"
+                onClick={() => setViewWorkouts(false)}
+              >
+                <DashBoardCard
+                  color="bg-sky-600"
+                  icon={faCirclePlus}
+                  text="Add Workout"
+                  className="hover:bg-sky-100"
+                />
+              </button>
+              <button
+                className="w-full px-6 sm:w-1/2 xl:w-1/3"
+                onClick={() => setViewWorkouts(true)}
+              >
+                <DashBoardCard
+                  color="bg-green-600"
+                  icon={faDumbbell}
+                  text="View Workouts"
+                  className="hover:bg-green-100"
+                />
+              </button>
+            </div>
           </div>
-        </div>
-        {viewWorkouts ? (
-          <ViewWorkouts />
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, type: "tween", delay: 0.1 }}
-          >
-            <div className="mt-8 flex w-full flex-1 flex-col gap-2 md:max-h-[34rem] md:flex-row">
-              <CustomForm
-                heading="What exercise would you like to add?"
-                initialValues={workoutInitialValues}
-                inputFields={workoutInputFields}
-                validationSchema={workoutValidationSchema}
-                handleSubmit={exerciseSubmit}
-              />
-              <div className="flex w-full flex-col overflow-y-scroll rounded-lg bg-slate-100 px-5 py-1 text-center shadow-md">
-                <div className="flex items-center justify-center gap-2 border-b border-slate-300">
-                  <h2 className="p-3 text-xl font-extrabold text-black">
-                    Workout
-                  </h2>
-                  <FontAwesomeIcon
-                    className="text-2xl text-green-700 duration-300 hover:cursor-pointer hover:text-green-800"
-                    onClick={completeWorkoutPlan}
-                    icon={faCirclePlus}
-                  />
-                </div>
-
-                <div className="mt-3 flex flex-wrap justify-center gap-3">
-                  {exercises.map((exercise: ExerciseClass) => (
-                    <Exercise
-                      exercise={exercise}
-                      key={exercise.id}
-                      removeExercise={removeExercise}
+          {viewWorkouts ? (
+            <ViewWorkouts />
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, type: "tween", delay: 0.1 }}
+            >
+              <div className="mt-8 flex w-full flex-1 flex-col gap-2 md:max-h-[34rem] md:flex-row">
+                <CustomForm
+                  heading="What exercise would you like to add?"
+                  initialValues={workoutInitialValues}
+                  inputFields={workoutInputFields}
+                  validationSchema={workoutValidationSchema}
+                  handleSubmit={exerciseSubmit}
+                />
+                <div className="flex w-full flex-col overflow-y-scroll rounded-lg bg-slate-100 px-5 py-1 text-center shadow-md">
+                  <div className="flex items-center justify-center gap-2 border-b border-slate-300">
+                    <h2 className="p-3 text-xl font-extrabold text-black">
+                      Workout
+                    </h2>
+                    <FontAwesomeIcon
+                      className="text-2xl text-green-700 duration-300 hover:cursor-pointer hover:text-green-800"
+                      onClick={completeWorkoutPlan}
+                      icon={faCirclePlus}
                     />
-                  ))}
+                  </div>
+
+                  <div className="mt-3 flex flex-wrap justify-center gap-3">
+                    {exercises.map((exercise: ExerciseClass) => (
+                      <Exercise
+                        exercise={exercise}
+                        key={exercise.id}
+                        removeExercise={removeExercise}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </div>
-    </main>
+            </motion.div>
+          )}
+        </div>
+      </main>
+    </AuthLayout>
   );
 };
 
